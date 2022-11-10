@@ -1,0 +1,44 @@
+{
+    "elements": [],
+    "actions": [
+        {
+            "type": "Configurator",
+            "name": "Configurator",
+            "caption": "Configurator",
+            "delete": false,
+            "sort": {
+                "column": "name",
+                "direction": "ascending"
+            },
+            "columns": [
+                {
+                    "caption": "Devicename",
+                    "name": "name",
+                    "width": "auto"
+                },
+                {
+                    "caption": "Model",
+                    "name": "model",
+                    "width": "200px"
+                },
+                {
+                    "caption": "MQTT Topic",
+                    "name": "topic",
+                    "width": "200px"
+                },
+                {
+                    "caption": "IP Address",
+                    "name": "ip",
+                    "width": "200px"
+                },
+                {
+                    "caption": "Serial number",
+                    "name": "serial",
+                    "width": "200px"
+                }
+            ],
+            "values": []
+        }       
+    ],
+    "status": []
+}

@@ -1,0 +1,87 @@
+{
+    "elements": [
+        {
+            "type": "ValidationTextBox",
+            "name": "BaseTopic",
+            "caption": "OpenDTU MQTT Base Topic"
+        },
+        {
+            "type": "ValidationTextBox",
+            "name": "Serial",
+            "caption": "Inverter's serial number"
+        },
+        {
+            "type": "Select",
+            "name": "Model",
+            "caption": "Model",
+            "options": [
+                { "caption": "HM-300", "value": "HM-300" },
+                { "caption": "HM-350", "value": "HM-350" },
+                { "caption": "HM-400", "value": "HM-400" },
+                { "caption": "HM-600", "value": "HM-600" },
+                { "caption": "HM-700", "value": "HM-700" },
+                { "caption": "HM-800", "value": "HM-800" },
+                { "caption": "HM-1200", "value": "HM-1200" },
+                { "caption": "HM-1500", "value": "HM-1500" },
+                { "caption": "UNKNOWN", "value": "UNKNOWN" }
+            ]
+        },
+        {
+            "type": "List",
+            "name": "Variables",
+            "caption": "Variables",
+            "rowCount": 10,
+            "add": false,
+            "delete": false,
+            "columns": [{
+                "caption": "Ident",
+                "name": "Ident",
+                "save": true,
+                "width": "0px",
+                "visible": false
+            }, {
+                "caption": "Position",
+                "name": "Position",
+                "save": true,
+                "width": "100px",
+                "visible": true
+            }, {
+                "caption": "VariableProfile",
+                "name": "VariableProfile",
+                "save": true,
+                "width": "0px",
+                "visible": false
+            },{
+                "caption": "VariableType",
+                "name": "VariableType",
+                "save": true,
+                "width": "0px",
+                "visible": false
+            },{
+                "caption": "Name",
+                "name": "Name",
+                "width": "500px",
+                "save": true,
+                "visible": true
+            }, {
+                "caption": "Active",
+                "name": "Active",
+                "save": true,
+                "width": "75px",
+                "visible": true,
+                "edit": {
+                    "type": "CheckBox"
+                }
+            }],
+            "values": []
+        }     
+    ],
+    "actions": [
+        {
+            "type": "TestCenter"
+        },
+        { "type": "Button", "label": "Reset variables to default", "onClick": "HOYMILES_ResetVariables($id);" }
+
+    ],
+    "status": []
+}
