@@ -80,7 +80,7 @@
         {
             "type": "TestCenter"
         },
-        { "type": "Button", "label": "Reset variables to default", "onClick": "HOYMILES_ResetVariables($id);" }
+        { "type": "Button", "label": "Reset variables to default", "onClick": "HOYMILES_ResetVariableList($id);" }
 
     ],
     "status": []
