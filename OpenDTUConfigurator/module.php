@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-	class HoymilesOpenDTUConfigurator extends IPSModule
+	class OpenDTUConfigurator extends IPSModule
 	{
 		public function Create()
 		{

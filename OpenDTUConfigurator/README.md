@@ -1,4 +1,4 @@
-# Hoymiles OpenDTU Configurator
+# OpenDTU Configurator
 Der Konfigurator erkennt automatisch alle am IP-Symcon MQTT-Server angemeldeten OpenDTU's und ermöglicht die einfache Erstellung der Hoymiles Microinverter Instanzen ohne Konfigurationsaufwandt.
 
 ### Inhaltsverzeichnis

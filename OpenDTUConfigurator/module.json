@@ -1,9 +1,9 @@
 {
     "id": "{549E63D5-2AB9-FDBB-B7EC-082E9284F3A4}",
-    "name": "Hoymiles OpenDTU Configurator",
+    "name": "OpenDTU Configurator",
     "type": 4,
     "vendor": "Hoymiles",
-    "aliases": ["Hoymiles Microinverter with OpenDTU Configurator"],
+    "aliases": [],
     "parentRequirements": [
         "{043EA491-0325-4ADD-8FC2-A30C8EEB4D3F}",
         "{97475B04-67C3-A74D-C970-E9409B0EFA1D}"
