@@ -1,5 +1,5 @@
 # OpenDTU Configurator
-Der Konfigurator erkennt automatisch alle am IP-Symcon MQTT-Server angemeldeten OpenDTU's und ermöglicht die einfache Erstellung der Hoymiles Microinverter Instanzen ohne Konfigurationsaufwandt.
+Der Konfigurator erkennt automatisch alle am IP-Symcon MQTT-Server angemeldeten OpenDTU's und ermöglicht die einfache Erstellung der *Hoymiles Microinverter*-Instanzen ohne Konfigurationsaufwandt.
 
 ### Inhaltsverzeichnis
 
@@ -10,7 +10,7 @@ Der Konfigurator erkennt automatisch alle am IP-Symcon MQTT-Server angemeldeten 
 
 ### 1. Einrichten der Instanzen in IP-Symcon
 
-Unter 'Instanz hinzufügen' kann das 'HoymilesOpenDTUConfigurator'-Modul mithilfe des Schnellfilters gefunden werden. 
+Unter 'Instanz hinzufügen' kann das 'OpenDTU Configurator'-Modul mithilfe des Schnellfilters gefunden werden. 
 
 Der Konfigurator findet automatisch alle OpenDTU's, die am IP-Symcon MQTT-Server angemeldet sind. Sofern noch keine MQTT-Server Instanz vorhanden ist, erstellt der Konfigurator eine neue Server-Instanz.
 

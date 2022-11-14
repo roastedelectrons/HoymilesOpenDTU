@@ -1,10 +1,11 @@
-[![Version](https://img.shields.io/badge/Symcon-PHPModul-blue.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Version](https://img.shields.io/badge/Symcon%20Version-%20%3E6.0-blue.svg)](https://www.symcon.de/de/service/dokumentation/installation/migrationen/)
+[![Symcon Module](https://img.shields.io/badge/Symcon-PHPModul-blue.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
+![Symcon Version](https://img.shields.io/badge/dynamic/json?color=blue&label=Symcon%20Version&prefix=%3E%3D&query=compatibility.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Froastedelectrons%2FHoymilesOpenDTU%2Fmain%2Flibrary.json)
+![Module Version](https://img.shields.io/badge/dynamic/json?color=green&label=Module%20Version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2Froastedelectrons%2FHoymilesOpenDTU%2Fmain%2Flibrary.json)
 ![GitHub](https://img.shields.io/github/license/roastedelectrons/hoymilesopendtu)
  
 # Hoymiles Mikrowechselrichter mit OpenDTU
 
-Modul für IP-Symcon zur Integration der Hoymiles Modulwechselrichter (HM-300, HM-350, HM-400, HM-600, HM-800, HM-1200, HM-1500) über eine OpenDTU. 
+Modul für IP-Symcon zur Integration der Hoymiles Mikrowechselrichter für Photovoltaik-Module (HM-300, HM-350, HM-400, HM-600, HM-800, HM-1200, HM-1500) über eine OpenDTU. 
 
 OpenDTU ist eine Firmware für den ESP32 und bildet zusamen mit einem NRF24L01+ Funkmodul ein Gateway zur Kommunikation mit den Wechselrichtern. OpenDTU stellt ein Webinterface zur Konfiguration und zum Auslesen der Wechselrichter zur Verfügung und kann mittels MQTT in andere Systeme eingebunden werden. Weitere Infos zum Bau und Einrichtung der OpenDTU gibt es im  [OpenDTU GitHub-Repository](https://github.com/tbnobody/OpenDTU).
 
@@ -27,7 +28,7 @@ OpenDTU ist eine Firmware für den ESP32 und bildet zusamen mit einem NRF24L01+ 
 ### 2. Enthaltene Module
 
 - __Hoymiles Microinverter__ ([Dokumentation](HoymilesMicroinverter))  
-	Das Modul stellt alle Daten der Hoymiles Modulwechselrichter (HM-300, HM-350, HM-400, HM-600, HM-800, HM-1200, HM-1500), die an einem OpenDTU Gateway angemeldet sind, in IP-Symcon bereit. Außerdem kann aus IP-Symcon heraus die Einspeiseleistung des Wechselrichters geändert werden.
+	Das Modul stellt alle Daten der Hoymiles Modulwechselrichter (HM-300, HM-350, HM-400, HM-600, HM-800, HM-1200, HM-1500), die an einem OpenDTU Gateway angemeldet sind in IP-Symcon bereit. Außerdem kann aus IP-Symcon heraus die Leistungsbegrenzung des Wechselrichters geändert werden.
 
 - __OpenDTU Configurator__ ([Dokumentation](OpenDTUConfigurator))  
 	Der Konfigurator erkennt automatisch alle OpenDTU's, die am IP-Symcon MQTT Server angemeldet sind und ermöglicht so die einfache Erstellung der Instanz für den Hoymiles Modulwechselrichter ohne weiteren Konfigurationsaufwandt.
@@ -38,11 +39,9 @@ OpenDTU ist eine Firmware für den ESP32 und bildet zusamen mit einem NRF24L01+ 
 
 ### 4. Einrichtung in IP-Symcon
 
-Vor der Einrichtung in IP-Symcon sollten die MQTT-Einstellungen in der OpenDTU, wie im nächsten Abschnitt beschrieben, vorgenommen werden.
+Vor der Einrichtung in IP-Symcon sollten die MQTT-Einstellungen in OpenDTU, wie im nächsten Kapitel beschrieben, vorgenommen werden.
 
-Die Installation und Einrichtung der *Hoymiles Microinverter*-Instanzen erfolgt am einfachten mit dem *OpenDTU Configrator*. Der Konfigurator erkennt automatisch alle OpenDTU's und Wechselrichter, die am Symcon MQTT-Server angemeldet sind. Werden neue Instanzen aus dem Konfigurator heraus angelegt, werden sie automatisch eingerichtet und sind sofort funktionsbereit.
-
-Die manuelle Konfiguration der *Hoymiles Microinverter*-Instanzen ist in der Modul-Dokumentation beschrieben.
+Die Installation und Einrichtung der *Hoymiles Microinverter*-Instanzen erfolgt am einfachten mit dem *OpenDTU Configurator*. Der Konfigurator erkennt automatisch alle OpenDTU's und Wechselrichter, die am Symcon MQTT-Server angemeldet sind. Werden neue Instanzen aus dem Konfigurator heraus angelegt, werden sie automatisch eingerichtet und sind sofort funktionsbereit.
 
 ### 5. Einrichtung in OpenDTU
 

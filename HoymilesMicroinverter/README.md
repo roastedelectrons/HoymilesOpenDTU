@@ -1,10 +1,10 @@
 # Hoymiles Microinverter
-Das Modul stellt alle Daten der Hoymiles Modulwechselrichter (HM-300, HM-350, HM-400, HM-600, HM-800, HM-1200, HM-1500), die an einem OpenDTU Gateway angemeldet sind in IP-Symcon bereit. Außerdem kann aus IP-Symcon heraus die Einspeiseleistung des Wechselrichters geändert werden.
+Das Modul stellt alle Daten der Hoymiles Modulwechselrichter (HM-300, HM-350, HM-400, HM-600, HM-800, HM-1200, HM-1500), die an einem OpenDTU Gateway angemeldet sind in IP-Symcon bereit. Außerdem kann aus IP-Symcon heraus die Leistungsbegrenzung des Wechselrichters geändert werden.
 
 ### Inhaltsverzeichnis
 
 1. [Einrichten der Instanzen in IP-Symcon](#1-einrichten-der-instanzen-in-ip-symcon)
-2. [Statusvariablen und Profile](#2-statusvariablen-und-profile)
+2. [Statusvariablen und Profile](#2-statusvariablen)
 3. [WebFront](#3-webfront)
 4. [PHP-Befehlsreferenz](#4-php-befehlsreferenz)
 
@@ -21,7 +21,7 @@ Model      | Modell des Wechselrichters
 
 ![Instanzkonfiguration](../docs/HoymilesMicroinverter_Configuration.png)
 
-### 2. Statusvariablen und Profile
+### 2. Statusvariablen
 
 Alle Statusvariablen können in der Instantzkonfiguration einzeln aktiviert bzw. deaktiviert werden.
 
@@ -29,8 +29,8 @@ Alle Statusvariablen können in der Instantzkonfiguration einzeln aktiviert bzw.
 ### 3. WebFront
 
 Im Webfront können die folgenden Funktionen gesteuert werden:
-* Power Limit absolut setzen (nicht-persistent)
-* Power Limit relativ setzen (nicht-persistent)
+* Leistungsbegrenzung absolut setzen (nicht-persistent)
+* Leistungsbegrenzung relativ setzen (nicht-persistent)
 * Wechselrichter an- und ausschalten
 
 
@@ -38,7 +38,7 @@ Im Webfront können die folgenden Funktionen gesteuert werden:
 
 `boolean HOYMILES_SetLimitAbsolute(integer $InstanzID, integer $Limit);`
 
-Setzt das Einspeiselimit in Watt. Das Limit wird im Wechselrichter nicht persistent gespeichert und wird nach Ausschalten des Wechselrichters (nachts) wieder auf den persistent gepseicherten Wert zurückgesetzt.
+Setzt das  in Watt. Das Limit wird im Wechselrichter nicht persistent gespeichert und wird nach Ausschalten des Wechselrichters (nachts) wieder auf den persistent gepseicherten Wert zurückgesetzt.
 
 `boolean HOYMILES_SetLimitRelative(integer $InstanzID, integer $Limit);`
 
