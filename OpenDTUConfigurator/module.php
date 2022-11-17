@@ -131,27 +131,39 @@ declare(strict_types=1);
 		{
 			$form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
 	
-			if (floatval(IPS_GetKernelVersion()) < 5.3) {
-				return json_encode($form);
-			}
-		
-			$instanceList = IPS_GetInstanceListByModuleID("{3CEA9993-1F13-9C04-E421-5A3DB44431C3}");
-			$instancesBySerial = array();
-
-			foreach ($instanceList as $instanceID)
+			// Get existing instances connected to the same MQTT-Server-Instance
+            $connectedInstances = [];
+            foreach (IPS_GetInstanceListByModuleID('{3CEA9993-1F13-9C04-E421-5A3DB44431C3}') as $instanceID) 
 			{
-				$serial = IPS_GetProperty($instanceID, 'Serial');
-				if ($serial != "") $instancesBySerial[$serial] = $instanceID;
-			}
+                if (IPS_GetInstance($instanceID)['ConnectionID'] === IPS_GetInstance($this->InstanceID)['ConnectionID']) 
+				{
+                    // Add the instance ID to a list for the given address. Even though addresses should be unique, users could break things by manually editing the settings
+					$connectedInstance['topic'] = IPS_GetProperty($instanceID, 'BaseTopic');
+					$connectedInstance['serial'] = IPS_GetProperty($instanceID, 'Serial');
+					$connectedInstance['model'] = IPS_GetProperty($instanceID, 'Model');
+					$connectedInstance['name'] = IPS_GetName($instanceID);
+					$connectedInstance['ip'] = "";
+					$connectedInstance['parent'] = $connectedInstance['topic'];
+					if ($connectedInstance['parent'] == "") $connectedInstance['parent'] = "<empty>";
+					$connectedInstance['instanceID'] = $instanceID;
+					
+					$connectedInstances[] = $connectedInstance;
+                }
+            }
 
-
+			// Get devices found from MQTT-Server
 			$devices = json_decode( $this->GetBuffer("Devices"), true);
 
+			
 			$tree = array();
+			$index = 0;
+
+
+			// Add found devices to configuration tree
 			foreach ($devices as $index => $device)
 			{
 				// OpenDTUs
-				$device['id'] = $index +1;
+				$device['id'] = $device['topic'];
 				$device['expanded'] = true;
 				$tree[] = $device;
 
@@ -161,17 +173,68 @@ declare(strict_types=1);
 					$config['BaseTopic'] = $inverter['topic'];
 					$config['Serial'] = $inverter['serial'];
 					$config['Model'] = $inverter['model'];
-
-					if ( array_key_exists( $inverter['serial'], $instancesBySerial))
-					{
-						$inverter['instanceID'] = $instancesBySerial[ $inverter['serial'] ];
-					}
-					$inverter['parent'] = $index +1;
+					$inverter['instanceID'] = 0;
+					$inverter['parent'] = $inverter['topic'];
 					$inverter['create'] = array( 'moduleID' => '{3CEA9993-1F13-9C04-E421-5A3DB44431C3}', 'configuration' => $config);                   
 
 					$tree[] = $inverter;
 				}
 			}
+
+
+			// Add existing instances to configuration tree
+			foreach( $connectedInstances as $instance)
+			{
+				$match = false;
+
+				foreach ( $tree as $treeIndex => $entry)
+				{
+					// If device from MQTT server matches existing instance, replace it with the existing instance
+					if ($instance['topic'] == $entry['topic'] && $instance['serial'] == $entry['serial'] && $entry['model'] != "OpenDTU" )
+					{
+						$id = $entry['instanceID'];
+
+						$entry['name'] = $instance['name'];
+						$entry['model'] = $instance['model'];
+						$entry['instanceID'] = $instance['instanceID'];
+
+						if ( $id == 0 )
+						{
+							$tree[$treeIndex] = $entry;
+						}
+						else
+						{
+							// If more than one instance with the same topic/serial exist, add a new entry to tree
+							$tree[] = $entry;
+						}
+						$match = true;
+						break;
+					}
+
+				}
+				
+				if ( !$match)
+				{
+					if ( array_search ($instance['topic'], array_column( $tree, "topic") ) === false )
+					{
+						// Add new DTU
+						$newDevice['name'] = "OpenDTU ".$this->Translate("not available");
+						$newDevice['topic'] = $instance['topic'];
+						$newDevice['model'] = "OpenDTU";
+						$newDevice['ip'] = $this->Translate("not available");
+						$newDevice['serial'] = "";
+						$newDevice['id'] = $instance['topic'];
+						if ($newDevice['id'] == "") $newDevice['id'] = "<empty>";
+						$newDevice['expanded'] = true;
+						$tree[] = $newDevice;								
+					}
+	
+					$instance['ip'] = $this->Translate("not available");
+					$tree[] = $instance;
+				}
+
+			}
+
 
 			$form['actions'][0]['values'] = $tree;
 

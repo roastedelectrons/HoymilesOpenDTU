@@ -39,6 +39,8 @@ OpenDTU ist eine Firmware für den ESP32 und bildet zusamen mit einem NRF24L01+ 
 
 ### 4. Einrichtung in IP-Symcon
 
+*Hinweis: Die Einrichtung sollte erfolgen, wenn der Wechselrichter eingeschaltet ist (es liegt eine ausreichende DC-Spannung am Modul-Eingang an), da nur dann alle notwendigen Daten von OpenDTU bereitgestellt werden.*
+
 Vor der Einrichtung in IP-Symcon sollten die MQTT-Einstellungen in OpenDTU, wie im nächsten Kapitel beschrieben, vorgenommen werden.
 
 Die Installation und Einrichtung der *Hoymiles Microinverter*-Instanzen erfolgt am einfachten mit dem *OpenDTU Configurator*. Der Konfigurator erkennt automatisch alle OpenDTU's und Wechselrichter, die am Symcon MQTT-Server angemeldet sind. Werden neue Instanzen aus dem Konfigurator heraus angelegt, werden sie automatisch eingerichtet und sind sofort funktionsbereit.

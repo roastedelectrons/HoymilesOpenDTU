@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 			$this->ConnectParent('{C6D2AEB3-6E1F-4B2E-8E69-3A1A00246850}');
 
-			$this->RegisterPropertyString('BaseTopic', 'solar');
+			$this->RegisterPropertyString('BaseTopic', 'solar/');
 			$this->RegisterPropertyString('Serial', '');
 			$this->RegisterPropertyString('Model', 'UNKNOWN');
 

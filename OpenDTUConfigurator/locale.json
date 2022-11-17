@@ -1,7 +1,12 @@
 {
     "translations": {
         "de": {
-            "Configurator": "Konfigurator"
+            "Configurator (new inverters are only displayed if they are currently reachable)": "Konfigurator (Neue Wechselrichter werden nur angezeigt, wenn sie gerade errichbar sind)",
+            "Devicename": "Gerätename",
+            "Model": "Modell",
+            "IP Address" : "IP Adresse",
+            "Serial number": "Seriennummer",
+            "not available": "nicht erreichbar"
         }
     }
 }

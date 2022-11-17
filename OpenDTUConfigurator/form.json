@@ -4,7 +4,7 @@
         {
             "type": "Configurator",
             "name": "Configurator",
-            "caption": "Configurator",
+            "caption": "Configurator (new inverters are only displayed if they are currently reachable)",
             "delete": false,
             "sort": {
                 "column": "name",
@@ -19,22 +19,22 @@
                 {
                     "caption": "Model",
                     "name": "model",
-                    "width": "200px"
+                    "width": "150px"
                 },
                 {
                     "caption": "MQTT Topic",
                     "name": "topic",
-                    "width": "200px"
-                },
-                {
-                    "caption": "IP Address",
-                    "name": "ip",
-                    "width": "200px"
+                    "width": "150px"
                 },
                 {
                     "caption": "Serial number",
                     "name": "serial",
-                    "width": "200px"
+                    "width": "150px"
+                },
+                {
+                    "caption": "IP Address",
+                    "name": "ip",
+                    "width": "150px"
                 }
             ],
             "values": []
