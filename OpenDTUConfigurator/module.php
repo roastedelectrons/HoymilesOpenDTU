@@ -83,7 +83,9 @@ declare(strict_types=1);
 						$serial = $topicParts[0];
 
 						// Check for unknown inverters
-						if ( $inverterIndex = array_search( $serial, array_column( $device['inverters'], 'serial')  ) === false )
+						$inverterIndex = array_search( $serial, array_column( $device['inverters'], 'serial')  );
+
+						if ( $inverterIndex === false)
 						{
 							// Only add new inverters if hwversion is sent
 							if ($topicParts[1] == 'device' && $topicParts[2] == 'hwpartnumber')
