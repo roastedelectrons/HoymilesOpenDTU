@@ -5,6 +5,7 @@
             "type": "Configurator",
             "name": "Configurator",
             "caption": "Configurator (new inverters are only displayed if they are currently reachable)",
+            "discoveryInterval ": 10,
             "delete": false,
             "sort": {
                 "column": "name",
@@ -38,7 +39,8 @@
                 }
             ],
             "values": []
-        }       
+        } , 
+        { "type": "Button", "label": "Reset Configurator", "onClick": "OPENDTU_Reset($id);" }     
     ],
     "status": []
 }

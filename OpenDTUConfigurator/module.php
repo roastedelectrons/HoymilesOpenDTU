@@ -236,6 +236,7 @@ declare(strict_types=1);
 		{
 			$this->SetBuffer("Devices", "[]");
 			$this->ResetReceiveDataFilter();
+			$this->ReloadForm();
 		}
 
 		private function ResetReceiveDataFilter()

@@ -1,6 +1,7 @@
 {
     "translations": {
         "de": {
+            "Reset Configurator": "Konfigurator zurücksetzen",
             "Configurator (new inverters are only displayed if they are currently reachable)": "Konfigurator (Neue Wechselrichter werden nur angezeigt, wenn sie gerade errichbar sind)",
             "Devicename": "Gerätename",
             "Model": "Modell",
