@@ -23,23 +23,22 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::ApplyChanges();
 
-			$this->AddReceiveDataFilter('/dtu/hostname');
-			$this->AddReceiveDataFilter('/dtu/ip');
-			$this->AddReceiveDataFilter('/device/hwpartnumber');
+			$this->ResetReceiveDataFilter();
 		}
 
 		public function ReceiveData($JSONString)
 		{
 
 			$devices = json_decode( $this->GetBuffer("Devices"), true);
+
 			$topics = array_column( $devices, 'topic');
 
 			$data = json_decode($JSONString);
 
 			$this->SendDebug('ReceiveData', $JSONString, 0);
-
-			$topic = utf8_decode($data->Topic);
-			$value = utf8_decode($data->Payload);
+	
+			$topic = $data->Topic;
+			$payload = $data->Payload;
 
 			// Check for unknown DTU's
 			if ( strstr($topic, 'dtu/hostname' ) !== false )
@@ -49,12 +48,13 @@ declare(strict_types=1);
 				if (array_search( $baseTopic, $topics) === false)
 				{
 					$topics[] = $baseTopic;
-					$dtu = array( "topic" => $baseTopic, "name" => $value, "model" => "OpenDTU", 'serial' => '', "inverters" => array() );
+					$dtu = array( "topic" => $baseTopic, "name" => $payload, "model" => "OpenDTU", 'serial' => '', "inverters" => array() );
 					$devices[] = $dtu;
 
 					$this->LogMessage('New OpenDTU found: '.json_encode( $dtu ), KL_MESSAGE );
 
 					$this->SetBuffer("Devices", json_encode( $devices) );
+					$this->SendDebug("Devices Buffer", json_encode( $devices) , 0);
 
 				}
 
@@ -73,7 +73,7 @@ declare(strict_types=1);
 					// Data from DTU
 					if ( strcmp( $subTopic, 'dtu/ip') === 0 )
 					{
-						$devices[$index]['ip'] = $data->Payload;
+						$devices[$index]['ip'] = $payload;
 					}
 
 					// Data from Inverter
@@ -90,7 +90,7 @@ declare(strict_types=1);
 							// Only add new inverters if hwversion is sent
 							if ($topicParts[1] == 'device' && $topicParts[2] == 'hwpartnumber')
 							{
-								$inverter = array( 'serial' => $serial, 'model' => $this->getModel( $value ), 'name' => 'Microinverter '.$this->getModel( $value ) , 'topic' => $device['topic'], 'ip' => '');
+								$inverter = array( 'serial' => $serial, 'model' => $this->getModel( $payload ), 'name' => 'Microinverter '.$this->getModel( $payload ) , 'topic' => $device['topic'], 'ip' => '');
 								$devices[$index]['inverters'][] = $inverter;
 								$this->LogMessage('New inverter found: '.json_encode( $inverter ), KL_MESSAGE );
 
@@ -101,7 +101,7 @@ declare(strict_types=1);
 						{
 							if ( $topicParts[1] == 'name')
 							{
-								$devices[$index]['inverters'][$inverterIndex]['name'] = $value;
+								$devices[$index]['inverters'][$inverterIndex]['name'] = $payload;
 							}
 						}
 
@@ -116,17 +116,6 @@ declare(strict_types=1);
 			}
 
 
-		}
-
-		private function AddReceiveDataFilter( $topic )
-		{
-			$topics = json_decode( $this->GetBuffer('Topics'), true);
-			$topics[] = $topic;
-			$filter = '.*(' . implode('|', $topics ). ').*' ;
-			$this->SetReceiveDataFilter($filter);
-			$this->SetBuffer('Topics', json_encode($topics));
-
-			$this->SendDebug('AddReceiveDataFilter', $filter, 0);
 		}
 
 		public function GetConfigurationForm()
@@ -155,7 +144,7 @@ declare(strict_types=1);
 
 			// Get devices found from MQTT-Server
 			$devices = json_decode( $this->GetBuffer("Devices"), true);
-
+			$this->SendDebug("Devices Buffer", json_encode( $devices) , 0);
 			
 			$tree = array();
 			$index = 0;
@@ -241,6 +230,31 @@ declare(strict_types=1);
 			$form['actions'][0]['values'] = $tree;
 
 			return json_encode($form);
+		}
+
+		public function Reset()
+		{
+			$this->SetBuffer("Devices", "[]");
+			$this->ResetReceiveDataFilter();
+		}
+
+		private function ResetReceiveDataFilter()
+		{
+			$this->SetBuffer("Topics", "[]");
+			$this->AddReceiveDataFilter('/dtu/hostname');
+			$this->AddReceiveDataFilter('/dtu/ip');
+			$this->AddReceiveDataFilter('/device/hwpartnumber');			
+		}
+
+		private function AddReceiveDataFilter( $topic )
+		{
+			$topics = json_decode( $this->GetBuffer('Topics'), true);
+			$topics[] = $topic;
+			$filter = '.*(' . implode('|', $topics ). ').*' ;
+			$this->SetReceiveDataFilter($filter);
+			$this->SetBuffer('Topics', json_encode($topics));
+
+			$this->SendDebug('AddReceiveDataFilter', $filter, 0);
 		}
 
 		private function getModel( $hwpartnumber )

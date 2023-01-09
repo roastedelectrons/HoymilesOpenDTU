@@ -184,15 +184,13 @@ declare(strict_types=1);
 		public function ReceiveData($JSONString)
 		{
 			$data = json_decode($JSONString);
-			//IPS_LogMessage('JSONString', $JSONString);
-			//IPS_LogMessage('Device RECV', utf8_decode($data->Topic . ' - ' . $data->Payload));
-			//IPS_LogMessage('Device RECV', $data->Topic . ' - ' . $data->Payload);
+
+			$this->SendDebug("ReceiveData", $JSONString , 0);
 
 			$variables = json_decode( $this->ReadPropertyString("Variables"), true);
 
-
-			$topic = utf8_decode($data->Topic);
-			$value = utf8_decode($data->Payload);
+			$topic = $data->Topic;
+			$payload = $data->Payload;
 
 
 			$baseTopic =rtrim( $this->ReadPropertyString('BaseTopic') , '/').'/';
@@ -205,7 +203,7 @@ declare(strict_types=1);
 			if ( @$this->GetIDForIdent('dtu_status') ) 
 			{
 
-				if ( strpos( $topic, $baseTopic.'dtu/status' ) === 0 && $value == "offline")
+				if ( strpos( $topic, $baseTopic.'dtu/status' ) === 0 && $payload == "offline")
 				{
 					$this->SetValue( 'dtu_status', false);
 
@@ -216,18 +214,14 @@ declare(strict_types=1);
 			}
 
 
-			$this->LogMessage('InverterTopic: '.$inverterTopic, KL_DEBUG);
-
 			if ( strpos( $topic, $inverterTopic) === 0)
 			{
 				$subTopic = str_replace( $inverterTopic, '', $topic);
 				$ident = str_replace( '/', '_', $subTopic);
-				
-				$this->LogMessage("SubTopic: ".$subTopic, KL_DEBUG);
 
 				if ( @$this->GetIDForIdent($ident) ) 
 				{
-					$this->SetValue( $ident, $value);
+					$this->SetValue( $ident, $payload);
 				}
 			}
 
