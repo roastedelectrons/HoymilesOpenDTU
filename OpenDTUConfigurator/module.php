@@ -36,7 +36,12 @@ declare(strict_types=1);
 			$data = json_decode($JSONString);
 
 			$this->SendDebug('ReceiveData', $JSONString, 0);
-	
+
+			//UTF-8 Fix for Symcon 6.3
+            if (IPS_GetKernelDate() > 1670886000) {
+                $data->Payload = utf8_decode($data->Payload);
+            }
+
 			$topic = $data->Topic;
 			$payload = $data->Payload;
 

@@ -189,6 +189,11 @@ declare(strict_types=1);
 
 			$variables = json_decode( $this->ReadPropertyString("Variables"), true);
 
+			//UTF-8 Fix for Symcon 6.3
+			if (IPS_GetKernelDate() > 1670886000) {
+				$data->Payload = utf8_decode($data->Payload);
+			}
+
 			$topic = $data->Topic;
 			$payload = $data->Payload;
 
