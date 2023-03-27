@@ -44,11 +44,11 @@ Setzt das  in Watt. Das Limit wird im Wechselrichter nicht persistent gespeicher
 
 Setzt das Einspeiselimit in % von 1-100. Das Limit wird im Wechselrichter nicht persistent gespeichert und wird nach Ausschalten des Wechselrichters (nachts) wieder auf den persistent gepseicherten Wert zurückgesetzt.
 
-`boolean HOYMILES_SetLimitAbsolutePersistent(integer $InstanzID, integer $Limit);`
+`boolean HOYMILES_SetLimitPersistentAbsolute(integer $InstanzID, integer $Limit);`
 
 Setzt das Einspeiselimit in Watt. Das Limit wird im Wechselrichter persistent gespeichert und bleibt auch nach Ausschalten des Wechselrichters (nachts) erhalten.
 
-`boolean HOYMILES_SetLimitRelativePersistent(integer $InstanzID, integer $Limit);`
+`boolean HOYMILES_SetLimitPersistentRelative(integer $InstanzID, integer $Limit);`
 
 Setzt das Einspeiselimit in % von 1-100. Das Limit wird im Wechselrichter persistent gespeichert und bleibt auch nach Ausschalten des Wechselrichters (nachts) erhalten.
 
