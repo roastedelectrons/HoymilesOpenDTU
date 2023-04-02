@@ -9,7 +9,7 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::Create();
 
-			$this->ConnectParent('{C6D2AEB3-6E1F-4B2E-8E69-3A1A00246850}');
+			//$this->ConnectParent('{40505457-AB2C-057B-C9D7-657EBB53A528}');
 
 			$this->RegisterPropertyString('BaseTopic', 'solar/');
 			$this->RegisterPropertyString('Serial', '');
@@ -40,14 +40,16 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::ApplyChanges();
 
-			$this->ConnectParent('{C6D2AEB3-6E1F-4B2E-8E69-3A1A00246850}');
+			// For backward compatibility: change parent from MQTT-Server to OpenDTU
+			$this->MigrateSplitter();
+
+			$this->ConnectParent('{40505457-AB2C-057B-C9D7-657EBB53A528}');
 
 			//Setze Filter für ReceiveData
-			$BaseTopic =rtrim( $this->ReadPropertyString('BaseTopic') , '/');
 			$Serial = $this->ReadPropertyString('Serial');
 
-			$StatusTopic = $BaseTopic.'/dtu/status';
-			$InverterTopic = $BaseTopic.'/'.$Serial;
+			$StatusTopic = 'dtu/status';
+			$InverterTopic = $Serial;
 
 			$filter = '.*(' . preg_quote($StatusTopic) .'|'. preg_quote($InverterTopic) . ').*';
 			$this->SetReceiveDataFilter($filter);
@@ -104,10 +106,9 @@ declare(strict_types=1);
 
 		public function SetLimitRelative( int $limit )
 		{
-			$baseTopic =rtrim( $this->ReadPropertyString('BaseTopic') , '/');
 			$serial = $this->ReadPropertyString('Serial');
 
-			$topic = $baseTopic.'/'.$serial.'/cmd/limit_nonpersistent_relative';
+			$topic = $serial.'/cmd/limit_nonpersistent_relative';
 
 			$this->MQTTSend( $topic, strval($limit) );
 		}
@@ -123,20 +124,18 @@ declare(strict_types=1);
 				}
 			}
 
-			$baseTopic =rtrim( $this->ReadPropertyString('BaseTopic') , '/');
 			$serial = $this->ReadPropertyString('Serial');
 
-			$topic = $baseTopic.'/'.$serial.'/cmd/limit_nonpersistent_absolute';
+			$topic = $serial.'/cmd/limit_nonpersistent_absolute';
 
 			$this->MQTTSend( $topic, strval($limit) );
 		}
 
 		public function SetLimitPersistentRelative( int $limit )
 		{
-			$baseTopic =rtrim( $this->ReadPropertyString('BaseTopic') , '/');
 			$serial = $this->ReadPropertyString('Serial');
 
-			$topic = $baseTopic.'/'.$serial.'/cmd/limit_persistent_relative';
+			$topic = $serial.'/cmd/limit_persistent_relative';
 
 			$this->MQTTSend( $topic, strval($limit) );
 		}
@@ -152,30 +151,27 @@ declare(strict_types=1);
 				}
 			}
 
-			$baseTopic =rtrim( $this->ReadPropertyString('BaseTopic') , '/');
 			$serial = $this->ReadPropertyString('Serial');
 
-			$topic = $baseTopic.'/'.$serial.'/cmd/limit_persistent_absolute';
+			$topic = $serial.'/cmd/limit_persistent_absolute';
 
 			$this->MQTTSend( $topic, strval($limit) );
 		}
 
 		public function RestartInverter()
 		{
-			$baseTopic =rtrim( $this->ReadPropertyString('BaseTopic') , '/');
 			$serial = $this->ReadPropertyString('Serial');
 
-			$topic = $baseTopic.'/'.$serial.'/cmd/restart';
+			$topic = $serial.'/cmd/restart';
 
 			$this->MQTTSend( $topic, '1' );
 		}
 
 		public function SwitchInverter( bool $status )
 		{
-			$baseTopic =rtrim( $this->ReadPropertyString('BaseTopic') , '/');
 			$serial = $this->ReadPropertyString('Serial');
 
-			$topic = $baseTopic.'/'.$serial.'/cmd/power';
+			$topic = $serial.'/cmd/power';
 			$status = intval($status);
 
 			$this->MQTTSend( $topic, strval($status) );
@@ -189,26 +185,17 @@ declare(strict_types=1);
 
 			$variables = json_decode( $this->ReadPropertyString("Variables"), true);
 
-			//UTF-8 Fix for Symcon 6.3
-			if (IPS_GetKernelDate() > 1670886000) {
-				$data->Payload = utf8_decode($data->Payload);
-			}
-
-			$topic = $data->Topic;
-			$payload = $data->Payload;
-
-
-			$baseTopic =rtrim( $this->ReadPropertyString('BaseTopic') , '/').'/';
 			$Serial = $this->ReadPropertyString('Serial');
 
-			$inverterTopic = $baseTopic.$Serial.'/';
-
+			$payload= utf8_decode($data->Payload);
+			$topic = $data->Topic;
+			$inverterTopic = $Serial.'/';
 
 
 			if ( @$this->GetIDForIdent('dtu_status') ) 
 			{
 
-				if ( strpos( $topic, $baseTopic.'dtu/status' ) === 0 && $payload == "offline")
+				if ( strpos( $topic, 'dtu/status' ) === 0 && $payload == "offline")
 				{
 					$this->SetValue( 'dtu_status', false);
 
@@ -276,7 +263,7 @@ declare(strict_types=1);
 
 		private function MQTTSend(string $Topic, string $Payload)
 		{
-			$Server['DataID'] = '{043EA491-0325-4ADD-8FC2-A30C8EEB4D3F}';
+			$Server['DataID'] = "{6F642E77-958C-6C58-2101-F142FD7836DA}"; // '{043EA491-0325-4ADD-8FC2-A30C8EEB4D3F}' <- MQTT receive GUID
 			$Server['PacketType'] = 3;
 			$Server['QualityOfService'] = 0;
 			$Server['Retain'] = false;
@@ -300,6 +287,7 @@ declare(strict_types=1);
 
 			return $power;
 		}
+
 		private function GetVariableList()
 		{
 	
@@ -316,6 +304,44 @@ declare(strict_types=1);
 			return $data;
 		}
 
+		private function MigrateSplitter()
+		{
+			$parent = IPS_GetInstance($this->InstanceID)['ConnectionID'];
+
+			if ( $parent != 0 && IPS_GetInstance($parent)['ModuleInfo']['ModuleID'] != '{40505457-AB2C-057B-C9D7-657EBB53A528}')
+			{
+				$BaseTopic = $this->ReadPropertyString('BaseTopic');
+
+				IPS_DisconnectInstance($this->InstanceID);
+				$newParent = 0;
+				$dtus = IPS_GetInstanceListByModuleID('{40505457-AB2C-057B-C9D7-657EBB53A528}');
+				foreach( $dtus as $dtu)
+				{
+					if ( IPS_GetProperty( $dtu, 'BaseTopic') == $BaseTopic)
+					{
+						$newParent = $dtu;
+					}
+				}
+				if ($newParent !== 0)
+				{
+					IPS_ConnectInstance($this->InstanceID, $newParent);
+				}
+				else
+				{	
+					// Create OpenDTU Splitter
+					$dtu = IPS_CreateInstance ('{40505457-AB2C-057B-C9D7-657EBB53A528}');
+					IPS_SetName($dtu, 'OpenDTU');
+					//Connect OpenDTU to MQTT-Server
+					IPS_DisconnectInstance($dtu);
+					IPS_ConnectInstance($dtu, $parent);
+					// Set BaseTopic
+					IPS_SetProperty($dtu, 'BaseTopic', $BaseTopic);
+					IPS_ApplyChanges($dtu);
+					// Connect this instance to OpenDTU
+					IPS_ConnectInstance($this->InstanceID, $dtu);
+				}
+			}
+		}
 
 		protected function RegisterProfile($VarTyp, $Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits = 0)
 		{

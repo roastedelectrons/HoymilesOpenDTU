@@ -1,0 +1,42 @@
+[
+    {
+        "Ident": "ip",
+        "Name": "IP address",
+        "VariableType": 3,
+        "VariableProfile": "",
+        "Position": 1,
+        "Active": true
+    },
+    {
+        "Ident": "hostname",
+        "Name": "Hostname",
+        "VariableType": 3,
+        "VariableProfile": "",
+        "Position": 2,
+        "Active": true
+    },
+    {
+        "Ident": "rssi",
+        "Name": "RSSI",
+        "VariableType": 1,
+        "VariableProfile": "",
+        "Position": 3,
+        "Active": true
+    },
+    {
+        "Ident": "status",
+        "Name": "Online status",
+        "VariableType": 0,
+        "VariableProfile": "~Switch",
+        "Position": 4,
+        "Active": true
+    },
+    {
+        "Ident": "uptime",
+        "Name": "Uptime [s]",
+        "VariableType": 1,
+        "VariableProfile": "",
+        "Position": 5,
+        "Active": true
+    }
+]

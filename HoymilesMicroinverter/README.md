@@ -15,7 +15,6 @@ __Konfigurationsseite__:
 
 Name     | Beschreibung
 -------- | ------------------
-BaseTopic  | MQTT BaseTopic der OpenDTU (kann im Webinterface der OpenDTU unter *Settings->MQTT* gefunden und bei Bedarf konfiguriert werden)
 Serial     | Seriennummer des Wechselrichters
 Model      | Modell des Wechselrichters
 

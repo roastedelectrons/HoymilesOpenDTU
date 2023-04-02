@@ -2,30 +2,29 @@
     "elements": [
         {
             "type": "ValidationTextBox",
-            "name": "Serial",
-            "caption": "Inverter's serial number"
+            "name": "BaseTopic",
+            "caption": "OpenDTU MQTT Base Topic"
         },
         {
-            "type": "Select",
-            "name": "Model",
-            "caption": "Model",
-            "options": [
-                { "caption": "HM-300", "value": "HM-300" },
-                { "caption": "HM-350", "value": "HM-350" },
-                { "caption": "HM-400", "value": "HM-400" },
-                { "caption": "HM-600", "value": "HM-600" },
-                { "caption": "HM-700", "value": "HM-700" },
-                { "caption": "HM-800", "value": "HM-800" },
-                { "caption": "HM-1200", "value": "HM-1200" },
-                { "caption": "HM-1500", "value": "HM-1500" },
-                { "caption": "UNKNOWN", "value": "UNKNOWN" }
-            ]
+            "type": "ValidationTextBox",
+            "name": "Username",
+            "caption": "Username (default: admin)"
+        },
+        {
+            "type": "PasswordTextBox",
+            "name": "Password",
+            "caption": "Password (default: openDTU42)"
+        },
+        {
+            "type": "CheckBox",
+            "name": "Reconnect",
+            "caption": "Automatic reconnect in case of MQTT connection errors"
         },
         {
             "type": "List",
             "name": "Variables",
             "caption": "Variables",
-            "rowCount": 10,
+            "rowCount": 6,
             "add": false,
             "delete": false,
             "columns": [{
@@ -75,8 +74,11 @@
         {
             "type": "TestCenter"
         },
-        { "type": "Button", "label": "Reset variables to default", "onClick": "HOYMILES_ResetVariableList($id);" }
-
+        { "type": "Button", "label": "Reboot", "onClick": "if ( OPENDTU_Reboot($id) ) {echo 'Reboot successful!';}" },
+        { "type": "Button", "label": "Reconnect MQTT", "onClick": "if ( OPENDTU_ReconnectMQTT($id) ) {echo 'Reconnect successful';}" },
+        { "type": "Button", "label": "Reset variables to default", "onClick": "OPENDTU_ResetVariableList($id);" }
     ],
-    "status": []
+    "status": [
+        { "code": 200, "icon": "error", "caption": "No MQTT connection!" }
+    ]
 }

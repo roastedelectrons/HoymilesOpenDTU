@@ -5,13 +5,11 @@
     "vendor": "Hoymiles",
     "aliases": [],
     "parentRequirements": [
-        "{043EA491-0325-4ADD-8FC2-A30C8EEB4D3F}",
-        "{97475B04-67C3-A74D-C970-E9409B0EFA1D}"
+        "{043EA491-0325-4ADD-8FC2-A30C8EEB4D3F}"
     ],
     "childRequirements": [],
     "implemented": [
-        "{7F7632D9-FA40-4F38-8DEA-C83CD4325A32}",
-        "{DBDA9DF7-5D04-F49D-370A-2B9153D00D9B}"
+        "{7F7632D9-FA40-4F38-8DEA-C83CD4325A32}"
     ],
     "prefix": "OPENDTU",
     "url": ""

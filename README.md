@@ -16,7 +16,8 @@ OpenDTU ist eine Firmware für den ESP32 und bildet zusamen mit einem NRF24L01+ 
 3. [Software-Installation](#3-software-installation)
 4. [Einrichtung in IP-Symcon](#4-einrichtung-in-ip-symcon)
 5. [Einrichtung in OpenDTU](#5-einrichtung-in-opendtu)
-6. [Lizenz](#6-lizenz)
+6. [Changelog](#6-changelog)
+7. [Lizenz](#7-lizenz)
 
 
 ### 1. Voraussetzungen
@@ -29,6 +30,9 @@ OpenDTU ist eine Firmware für den ESP32 und bildet zusamen mit einem NRF24L01+ 
 
 - __Hoymiles Microinverter__ ([Dokumentation](HoymilesMicroinverter))  
 	Das Modul stellt alle Daten der Hoymiles Modulwechselrichter (HM-300, HM-350, HM-400, HM-600, HM-800, HM-1200, HM-1500), die an einem OpenDTU Gateway angemeldet sind in IP-Symcon bereit. Außerdem kann aus IP-Symcon heraus die Leistungsbegrenzung des Wechselrichters geändert werden.
+
+- __OpenDTU__ ([Dokumentation](OpenDTU))  
+	Das Modul stellt die Betriebsdaten der OpenDTU in IP-Symcon bereit. Außerdem ermöglicht es den Neustart der OpenDTU und ein Wiederverbinden der MQTT Verbindung.
 
 - __OpenDTU Configurator__ ([Dokumentation](OpenDTUConfigurator))  
 	Der Konfigurator erkennt automatisch alle OpenDTU's, die am IP-Symcon MQTT Server angemeldet sind und ermöglicht so die einfache Erstellung der Instanz für den Hoymiles Modulwechselrichter ohne weiteren Konfigurationsaufwandt.
@@ -52,7 +56,26 @@ Im Webinterface der OpenDTU müssen unter *Settings->MQTT* die folgenden *MQTT B
 - **Port**: Port des IP-Symcon MQTT-Servers
 - **Base Topic**: Dieser Wert kann beliebig gesetzt werden und muss in IP-Symcon in der *Hoymiles Microinverter*-Instanz eingetragen werden, sofern nicht der Konfigurator benutzt wird.
 
-### 6. Lizenz
+### 6. Changelog
+Version 1.2.0 (2023-04-02)
+* Neu: OpenDTU Splitter Instanz
+	* Statusvariablen der OpenDTU (Hostname, IP, RSSI, Uptime, Status)
+	* Reboot() startet OpenDTU neu (über WebAPI)
+	* ReconnectMQTT() versucht eine MQTT-Verbindung wiederherzustellen (über WebAPI)
+	* Schalter für automatischen Reconnect bei MQTT-Verbindungsproblemen
+	* Datenfluss (wird automatisch angepasst): MQTT-Server <-> OpenDTU (Splitter) <-> Microinverter (Device)
+
+Version 1.0.2
+* Fix: Probleme mit utf-8 Kodierung bei Umlauten in Wechselrichternamen und Topics in Symcon 6.3
+* Neu: Button zum Zurücksetzten des Konfigurators
+
+Version 1.0.1
+* FIX: Konfigurator hat falsche Wechselrichter-Namen angezeigt
+
+Version 1.0.0 
+* Inital stable release
+
+### 7. Lizenz
 MIT License
 
 Copyright (c) 2022 Tobias Ohrdes

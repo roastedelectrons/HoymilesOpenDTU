@@ -53,7 +53,7 @@ declare(strict_types=1);
 				if (array_search( $baseTopic, $topics) === false)
 				{
 					$topics[] = $baseTopic;
-					$dtu = array( "topic" => $baseTopic, "name" => $payload, "model" => "OpenDTU", 'serial' => '', "inverters" => array() );
+					$dtu = array( "topic" => $baseTopic, "name" => $payload, "model" => "OpenDTU", 'ip'=> '', 'serial' => '', "inverters" => array() );
 					$devices[] = $dtu;
 
 					$this->LogMessage('New OpenDTU found: '.json_encode( $dtu ), KL_MESSAGE );
@@ -95,7 +95,7 @@ declare(strict_types=1);
 							// Only add new inverters if hwversion is sent
 							if ($topicParts[1] == 'device' && $topicParts[2] == 'hwpartnumber')
 							{
-								$inverter = array( 'serial' => $serial, 'model' => $this->getModel( $payload ), 'name' => 'Microinverter '.$this->getModel( $payload ) , 'topic' => $device['topic'], 'ip' => '');
+								$inverter = array( 'serial' => $serial, 'model' => $this->getModel( $payload ), 'name' => 'Microinverter '.$this->getModel( $payload ) , 'topic' => '', 'ip' => '', 'parent' => $device['topic']);
 								$devices[$index]['inverters'][] = $inverter;
 								$this->LogMessage('New inverter found: '.json_encode( $inverter ), KL_MESSAGE );
 
@@ -128,12 +128,55 @@ declare(strict_types=1);
 			$form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
 	
 			// Get existing instances connected to the same MQTT-Server-Instance
-            $connectedInstances = [];
-            foreach (IPS_GetInstanceListByModuleID('{3CEA9993-1F13-9C04-E421-5A3DB44431C3}') as $instanceID) 
+            $dtuInstances = [];
+			$inverterInstances = [];
+			// OpenDTU instances
+            foreach (IPS_GetInstanceListByModuleID('{40505457-AB2C-057B-C9D7-657EBB53A528}') as $instanceID) 
 			{
                 if (IPS_GetInstance($instanceID)['ConnectionID'] === IPS_GetInstance($this->InstanceID)['ConnectionID']) 
 				{
+					$dtuInstance = array();
+					$dtuInstance['instanceID'] = $instanceID;
+					$dtuInstance['topic'] = IPS_GetProperty($instanceID, 'BaseTopic');
+					$dtuInstance['serial'] = '';
+					$dtuInstance['model'] = 'OpenDTU';
+					$dtuInstance['name'] = IPS_GetName($instanceID);
+					$dtuInstance['ip'] = '';
+					$dtuInstance['id'] = IPS_GetProperty($instanceID, 'BaseTopic');
+					$dtuInstance['expanded'] = true;
+
+					$dtuInstances[] = $dtuInstance;
+
+					// Microinverter intances connectet to this dtu
+					foreach (IPS_GetInstanceListByModuleID('{3CEA9993-1F13-9C04-E421-5A3DB44431C3}') as $inverterID) 
+					{
+						if (IPS_GetInstance($inverterID)['ConnectionID'] === $instanceID ) 
+						{
+							$inverter = array();
+							$inverter['instanceID'] = $inverterID;
+							$inverter['topic'] = '';
+							$inverter['serial'] = IPS_GetProperty($inverterID, 'Serial');
+							$inverter['model'] = IPS_GetProperty($inverterID, 'Model');
+							$inverter['name'] = IPS_GetName($inverterID);
+							$inverter['ip'] = "";
+							$inverter['parent'] = IPS_GetProperty($instanceID, 'BaseTopic');
+							$inverter['expanded'] = true;
+
+							$inverterInstances[] = $inverter;
+						}
+					}
+                }
+            }
+
+			/*
+			// Microinverter intances
+            foreach (IPS_GetInstanceListByModuleID('{3CEA9993-1F13-9C04-E421-5A3DB44431C3}') as $instanceID) 
+			{
+				$dtuID = IPS_GetInstance($instanceID)['ConnectionID'];
+                if ($dtuID != 0 && IPS_GetInstance($dtuID)['ConnectionID'] === IPS_GetInstance($this->InstanceID)['ConnectionID']) 
+				{
                     // Add the instance ID to a list for the given address. Even though addresses should be unique, users could break things by manually editing the settings
+					$connectedInstance = array();
 					$connectedInstance['topic'] = IPS_GetProperty($instanceID, 'BaseTopic');
 					$connectedInstance['serial'] = IPS_GetProperty($instanceID, 'Serial');
 					$connectedInstance['model'] = IPS_GetProperty($instanceID, 'Model');
@@ -147,6 +190,8 @@ declare(strict_types=1);
                 }
             }
 
+			*/
+
 			// Get devices found from MQTT-Server
 			$devices = json_decode( $this->GetBuffer("Devices"), true);
 			$this->SendDebug("Devices Buffer", json_encode( $devices) , 0);
@@ -156,59 +201,107 @@ declare(strict_types=1);
 
 
 			// Add found devices to configuration tree
+			$dtus = array();
+			$inverters = array();
 			foreach ($devices as $index => $device)
 			{
 				// OpenDTUs
-				$device['id'] = $device['topic'];
-				$device['expanded'] = true;
-				$tree[] = $device;
+				$dtuConfig = array();
+				$dtuConfig['BaseTopic'] = $device['topic'];
+				$dtu= $device;
+				unset($dtu['invertes']);
+				$dtu['id'] = $device['topic'];
+				$dtu['instanceID'] = 0;
+				$dtu['expanded'] = true;
+				$dtu['create'] = array( 'moduleID' => '{40505457-AB2C-057B-C9D7-657EBB53A528}', 'configuration' => $dtuConfig);  
+				$dtus[] = $dtu;
 
 				// Inverters
 				foreach( $device['inverters'] as $inverter)
 				{
-					$config['BaseTopic'] = $inverter['topic'];
+					$config = array();
+					//$config['BaseTopic'] = $inverter['topic'];
 					$config['Serial'] = $inverter['serial'];
 					$config['Model'] = $inverter['model'];
 					$inverter['instanceID'] = 0;
-					$inverter['parent'] = $inverter['topic'];
-					$inverter['create'] = array( 'moduleID' => '{3CEA9993-1F13-9C04-E421-5A3DB44431C3}', 'configuration' => $config);                   
+					//$inverter['parent'] = $inverter['topic'];
+					$inverter['create'] = [
+						array( 'moduleID' => '{3CEA9993-1F13-9C04-E421-5A3DB44431C3}', 'configuration' => $config),
+						array( 'moduleID' => '{40505457-AB2C-057B-C9D7-657EBB53A528}', 'configuration' => $dtuConfig)
+					];                   
 
-					$tree[] = $inverter;
+					$inverters[] = $inverter;
 				}
 			}
 
-
+		//print_r($tree );
 			// Add existing instances to configuration tree
-			foreach( $connectedInstances as $instance)
+			foreach( $dtuInstances as $instance)
 			{
 				$match = false;
 
-				foreach ( $tree as $treeIndex => $entry)
+				foreach ( $dtus as $index=> $dtu)
 				{
 					// If device from MQTT server matches existing instance, replace it with the existing instance
-					if ($instance['topic'] == $entry['topic'] && $instance['serial'] == $entry['serial'] && $entry['model'] != "OpenDTU" )
+					// OpenDTU's
+					
+					if ($instance['topic'] == $dtu['topic'])
 					{
-						$id = $entry['instanceID'];
+						$instance['ip'] = $dtu['ip'];
+						$instance['create'] = $dtu['create'];
 
-						$entry['name'] = $instance['name'];
-						$entry['model'] = $instance['model'];
-						$entry['instanceID'] = $instance['instanceID'];
-
-						if ( $id == 0 )
+						if ( $dtu['instanceID'] == 0)
 						{
-							$tree[$treeIndex] = $entry;
+							$dtus[$index] = $instance;
 						}
 						else
 						{
-							// If more than one instance with the same topic/serial exist, add a new entry to tree
-							$tree[] = $entry;
+							$dtus[] = $instance;
 						}
 						$match = true;
 						break;
 					}
-
 				}
-				
+
+				if ( !$match)
+				{
+					$dtus[] = $instance;
+				}
+			}
+
+			foreach( $inverterInstances as $instance)
+			{
+				$match = false;
+
+				foreach ( $inverters as $index=> $inverter)
+				{
+					// If device from MQTT server matches existing instance, replace it with the existing instance
+					// OpenDTU's
+					
+					if ($instance['serial'] == $inverter['serial'])
+					{
+						$instance['create'] = $inverter['create'];
+
+						if ( $inverter['instanceID'] == 0)
+						{
+							$inverters[$index] = $instance;
+						}
+						else
+						{
+							$inverters[] = $instance;
+						}
+						$match = true;
+						break;
+					}
+				}
+
+				if ( !$match)
+				{
+					$inverters[] = $instance;
+				}
+			}
+
+			/*
 				if ( !$match)
 				{
 					if ( array_search ($instance['topic'], array_column( $tree, "topic") ) === false )
@@ -217,6 +310,7 @@ declare(strict_types=1);
 						$newDevice['name'] = "OpenDTU ".$this->Translate("not available");
 						$newDevice['topic'] = $instance['topic'];
 						$newDevice['model'] = "OpenDTU";
+						$newDevice['instanceID'] = 0;
 						$newDevice['ip'] = $this->Translate("not available");
 						$newDevice['serial'] = "";
 						$newDevice['id'] = $instance['topic'];
@@ -228,10 +322,10 @@ declare(strict_types=1);
 					$instance['ip'] = $this->Translate("not available");
 					$tree[] = $instance;
 				}
-
-			}
-
-
+				*/
+			//print_r($dtus);
+			$tree = array_merge($dtus, $inverters);
+			
 			$form['actions'][0]['values'] = $tree;
 
 			return json_encode($form);

@@ -1,0 +1,19 @@
+{
+    "id": "{40505457-AB2C-057B-C9D7-657EBB53A528}",
+    "name": "OpenDTU",
+    "type": 2,
+    "vendor": "Hoymiles",
+    "aliases": ["OpenDTU"],
+    "parentRequirements": [
+        "{043EA491-0325-4ADD-8FC2-A30C8EEB4D3F}"
+    ],
+    "childRequirements": [
+        "{69CDBA93-CAE6-A38E-A3F1-0D779C1A1047}"
+    ],
+    "implemented": [
+        "{7F7632D9-FA40-4F38-8DEA-C83CD4325A32}",
+        "{6F642E77-958C-6C58-2101-F142FD7836DA}"
+    ],
+    "prefix": "OPENDTU",
+    "url": ""
+}

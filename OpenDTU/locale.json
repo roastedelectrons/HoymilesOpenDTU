@@ -1,0 +1,19 @@
+{
+    "translations": {
+        "de": {
+            "OpenDTU MQTT Base Topic": "OpenDTU MQTT Base Topic",
+            "Username (default: admin)": "Benutzername (Standard: admin)",
+            "Password (default: openDTU42)": "Passwort (Standard: openDTU42)",
+            "Automatic reconnect in case of MQTT connection errors": "Automatisch wiederverbinden bei MQTT Verbindungsfehlern",
+            "Variables": "Statusvariablen",
+            "Reset variables to default": "Statusvariablen auf Standardeinstellungen zurücksetzen",
+            "No MQTT connection!" : "Keine MQTT Verbindung!",
+            "Reboot" : "Neustart",
+            "Reconnect MQTT": "MQTT Wiederverbinden",
+            "IP address": "IP-Adresse",
+            "Hostname": "Hostname",
+            "Online status": "Online Status",
+            "Uptime [s]" : "Laufzeit [s]"
+        }
+    }
+}
