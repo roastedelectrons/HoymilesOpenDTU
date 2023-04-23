@@ -77,7 +77,7 @@ declare(strict_types=1);
 			
 				if ( $variable["Ident"] == "status_limit_relative" || $variable["Ident"] == "status_limit_absolute" || $variable["Ident"] == 'status_producing')
 				{
-					$this->EnableAction($variable["Ident"]);
+					@$this->EnableAction($variable["Ident"]);
 				}
 			}
 		}

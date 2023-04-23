@@ -57,13 +57,14 @@ Im Webinterface der OpenDTU müssen unter *Settings->MQTT* die folgenden *MQTT B
 - **Base Topic**: Dieser Wert kann beliebig gesetzt werden und muss in IP-Symcon in der *Hoymiles Microinverter*-Instanz eingetragen werden, sofern nicht der Konfigurator benutzt wird.
 
 ### 6. Changelog
-Version 1.2.0 (2023-04-02)
+Version 1.1.0 (2023-04-23)
 * Neu: OpenDTU Splitter Instanz
 	* Statusvariablen der OpenDTU (Hostname, IP, RSSI, Uptime, Status)
 	* Reboot() startet OpenDTU neu (über WebAPI)
 	* ReconnectMQTT() versucht eine MQTT-Verbindung wiederherzustellen (über WebAPI)
 	* Schalter für automatischen Reconnect bei MQTT-Verbindungsproblemen
 	* Datenfluss (wird automatisch angepasst): MQTT-Server <-> OpenDTU (Splitter) <-> Microinverter (Device)
+* Fix: Variablen mit Aktion können nun ohne Fehlermeldung deaktiviert werden
 
 Version 1.0.2
 * Fix: Probleme mit utf-8 Kodierung bei Umlauten in Wechselrichternamen und Topics in Symcon 6.3
