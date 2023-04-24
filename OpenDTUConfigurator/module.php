@@ -168,30 +168,6 @@ declare(strict_types=1);
                 }
             }
 
-			/*
-			// Microinverter intances
-            foreach (IPS_GetInstanceListByModuleID('{3CEA9993-1F13-9C04-E421-5A3DB44431C3}') as $instanceID) 
-			{
-				$dtuID = IPS_GetInstance($instanceID)['ConnectionID'];
-                if ($dtuID != 0 && IPS_GetInstance($dtuID)['ConnectionID'] === IPS_GetInstance($this->InstanceID)['ConnectionID']) 
-				{
-                    // Add the instance ID to a list for the given address. Even though addresses should be unique, users could break things by manually editing the settings
-					$connectedInstance = array();
-					$connectedInstance['topic'] = IPS_GetProperty($instanceID, 'BaseTopic');
-					$connectedInstance['serial'] = IPS_GetProperty($instanceID, 'Serial');
-					$connectedInstance['model'] = IPS_GetProperty($instanceID, 'Model');
-					$connectedInstance['name'] = IPS_GetName($instanceID);
-					$connectedInstance['ip'] = "";
-					$connectedInstance['parent'] = $connectedInstance['topic'];
-					if ($connectedInstance['parent'] == "") $connectedInstance['parent'] = "<empty>";
-					$connectedInstance['instanceID'] = $instanceID;
-					
-					$connectedInstances[] = $connectedInstance;
-                }
-            }
-
-			*/
-
 			// Get devices found from MQTT-Server
 			$devices = json_decode( $this->GetBuffer("Devices"), true);
 			$this->SendDebug("Devices Buffer", json_encode( $devices) , 0);
@@ -234,7 +210,6 @@ declare(strict_types=1);
 				}
 			}
 
-		//print_r($tree );
 			// Add existing instances to configuration tree
 			foreach( $dtuInstances as $instance)
 			{
@@ -276,7 +251,7 @@ declare(strict_types=1);
 				foreach ( $inverters as $index=> $inverter)
 				{
 					// If device from MQTT server matches existing instance, replace it with the existing instance
-					// OpenDTU's
+					// Inverter's
 					
 					if ($instance['serial'] == $inverter['serial'])
 					{
@@ -301,29 +276,6 @@ declare(strict_types=1);
 				}
 			}
 
-			/*
-				if ( !$match)
-				{
-					if ( array_search ($instance['topic'], array_column( $tree, "topic") ) === false )
-					{
-						// Add new DTU
-						$newDevice['name'] = "OpenDTU ".$this->Translate("not available");
-						$newDevice['topic'] = $instance['topic'];
-						$newDevice['model'] = "OpenDTU";
-						$newDevice['instanceID'] = 0;
-						$newDevice['ip'] = $this->Translate("not available");
-						$newDevice['serial'] = "";
-						$newDevice['id'] = $instance['topic'];
-						if ($newDevice['id'] == "") $newDevice['id'] = "<empty>";
-						$newDevice['expanded'] = true;
-						$tree[] = $newDevice;								
-					}
-	
-					$instance['ip'] = $this->Translate("not available");
-					$tree[] = $instance;
-				}
-				*/
-			//print_r($dtus);
 			$tree = array_merge($dtus, $inverters);
 			
 			$form['actions'][0]['values'] = $tree;
