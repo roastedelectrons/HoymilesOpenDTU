@@ -20,7 +20,7 @@ Username     | OpenDTU Benutzername (Standard: admin)
 Password      | OpenDTU Passwort (Standard: openDTU42)
 Reconnect   | Automatisch wiederverbinden bei MQTT Verbindungsfehlern
 
-![Instanzkonfiguration](../docs/HoymilesMicroinverter_Configuration.png)
+![Instanzkonfiguration](../docs/OpenDTU_Configuration.png)
 
 ### 2. Statusvariablen
 
