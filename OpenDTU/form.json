@@ -24,9 +24,10 @@
             "type": "List",
             "name": "Variables",
             "caption": "Variables",
-            "rowCount": 6,
+            "rowCount": 10,
             "add": false,
             "delete": false,
+            "loadValuesFromConfiguration": false,
             "columns": [{
                 "caption": "Ident",
                 "name": "Ident",
@@ -36,26 +37,14 @@
             }, {
                 "caption": "Position",
                 "name": "Position",
-                "save": true,
+                "save": false,
                 "width": "100px",
                 "visible": true
             }, {
-                "caption": "VariableProfile",
-                "name": "VariableProfile",
-                "save": true,
-                "width": "0px",
-                "visible": false
-            },{
-                "caption": "VariableType",
-                "name": "VariableType",
-                "save": true,
-                "width": "0px",
-                "visible": false
-            },{
                 "caption": "Name",
                 "name": "Name",
                 "width": "500px",
-                "save": true,
+                "save": false,
                 "visible": true
             }, {
                 "caption": "Active",
@@ -75,8 +64,7 @@
             "type": "TestCenter"
         },
         { "type": "Button", "label": "Reboot", "onClick": "if ( OPENDTU_Reboot($id) ) {echo 'Reboot successful!';}" },
-        { "type": "Button", "label": "Reconnect MQTT", "onClick": "if ( OPENDTU_ReconnectMQTT($id) ) {echo 'Reconnect successful';}" },
-        { "type": "Button", "label": "Reset variables to default", "onClick": "OPENDTU_ResetVariableList($id);" }
+        { "type": "Button", "label": "Reconnect MQTT", "onClick": "if ( OPENDTU_ReconnectMQTT($id) ) {echo 'Reconnect successful';}" }
     ],
     "status": [
         { "code": 200, "icon": "error", "caption": "No MQTT connection!" }

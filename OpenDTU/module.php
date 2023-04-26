@@ -15,15 +15,7 @@ declare(strict_types=1);
 			$this->RegisterPropertyString('Username', 'admin');
 			$this->RegisterPropertyString('Password', 'openDTU42');
 			$this->RegisterPropertyBoolean('Reconnect', false);
-
-			$variables = $this->GetVariableList();
-
-			foreach ($variables as $index => $variable)
-			{
-				$variables[$index]['Name'] = $this->Translate( $variable['Name'] ) ;
-			}
-
-			$this->RegisterPropertyString("Variables", json_encode ( $variables) );
+			$this->RegisterPropertyString('Variables', '[]');
 
 			$this->RegisterAttributeString('IP', '');
 			
@@ -52,18 +44,7 @@ declare(strict_types=1);
 			$this->LogMessage('Filter: '.$filter, KL_MESSAGE);
 
 			// Get Variable list
-			$variables = json_decode( $this->ReadPropertyString("Variables"), true);
-
-
-			// Check for new Variables in case of a module update
-			// Get variable list template
-			$variableList = $this->GetVariableList();
-
-			if ( count( $variables) != count($variableList) )
-			{
-				$variables = $this->UpdateVariableList();
-			}
-
+			$variables = $this->GetVariablesConfiguration();
 
 			foreach( $variables as $variable)
 			{
@@ -217,46 +198,42 @@ declare(strict_types=1);
 			$result = $this->SendDataToParent($JSONString);			
 		}
 
-
-		public function UpdateVariableList()
+		public function GetConfigurationForm()
 		{
-			// Get current variable list
-			$variables = json_decode( $this->ReadPropertyString("Variables"), true);
+			$form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
 
-			// Get variable list  template
-			$variableList = $this->GetVariableList();
+			// Set variables configuration
+			$variablesIndex = array_search( 'Variables', array_column( $form['elements'], 'name') );
+			if ( $variablesIndex !== false)
+			{
+				$form['elements'][$variablesIndex]['values'] = $this->GetVariablesConfiguration();
+			}
+
+			return json_encode($form);
+		}
+
+		public function GetVariablesConfiguration()
+		{
+			// Get variables configuration
+			$variablesConfiguration = json_decode( $this->ReadPropertyString("Variables"), true);
+
+			// Get variables list template
+			$variableList = $this->GetVariablesList();
 
 			// Generate a new Variable List from template
 			foreach ($variableList as $index => $newVariable)
 			{
 				$variableList[$index]['Name'] = $this->Translate( $newVariable['Name'] ) ;
 				
-				// If variable already existed, keep Active parameter
-				$variablesIndex = array_search( $newVariable['Ident'], array_column( $variables, 'Ident') );
+				// If configuration for variable exists, keep Active parameter
+				$variablesIndex = array_search( $newVariable['Ident'], array_column( $variablesConfiguration, 'Ident') );
 				if ($variablesIndex !== false)
 				{
-					$variableList[$index]['Active']  = $variables[$variablesIndex]['Active'];
+					$variableList[$index]['Active']  = $variablesConfiguration[$variablesIndex]['Active'];
 				}
 			}
 			
-			IPS_SetProperty( $this->InstanceID, "Variables", json_encode ( $variableList ) );
-			IPS_ApplyChanges( $this->InstanceID );	
-
 			return $variableList;
-		}
-
-		public function ResetVariableList( )
-		{
-			$variables = $this->GetVariableList();
-
-			foreach ($variables as $index => $value)
-			{
-				$variables[$index]['Name'] = $this->Translate( $variables[$index]['Name'] ) ;
-			}
-	
-
-			IPS_SetProperty( $this->InstanceID, "Variables", json_encode ( $variables ) );
-			IPS_ApplyChanges( $this->InstanceID );
 		}
 
 		private function MQTTSend(string $Topic, string $Payload)
@@ -338,7 +315,7 @@ declare(strict_types=1);
 			return rtrim( $this->ReadPropertyString('BaseTopic') , '/').'/';
 		}
 
-		private function GetVariableList()
+		private function GetVariablesList()
 		{
 	
 			$file = __DIR__ . "/../libs/variables_opendtu.json";
