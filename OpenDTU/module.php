@@ -131,12 +131,11 @@ declare(strict_types=1);
 
 			$baseTopic = $this->GetBaseTopic();
 
-			$deviceTopic = $baseTopic.'dtu/';
 
-
-			if ( strpos( $topic, $deviceTopic) === 0)
+			if ( strpos( $topic, $baseTopic.'dtu/') === 0 || strpos( $topic, $baseTopic.'ac/') === 0 || strpos( $topic, $baseTopic.'dc/') === 0)
 			{
-				$subTopic = str_replace( $deviceTopic, '', $topic);
+				$subTopic = str_replace( $baseTopic, '', $topic);
+				$subTopic = str_replace( 'dtu/', '', $subTopic);
 				$ident = str_replace( '/', '_', $subTopic);
 
 				if ( $ident == 'status')

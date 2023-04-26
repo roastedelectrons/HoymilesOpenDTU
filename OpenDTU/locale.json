@@ -13,7 +13,14 @@
             "IP address": "IP-Adresse",
             "Hostname": "Hostname",
             "Online status": "Online Status",
-            "Uptime [s]" : "Laufzeit [s]"
+            "Uptime [s]" : "Laufzeit [s]",
+            "AC Power": "AC Leistung",
+            "AC Energy today": "AC Energie heute",
+            "AC Energy total": "AC Energie gesamt",
+            "AC values are valid (all inverters reachable)": "AC Werte sind gültig (alle Wechselrichter erreichbar)",
+            "DC Power": "DC Leistung",
+            "DC Irradiation": "DC Einstrahlung",
+            "DC values are valid (all inverters reachable)": "DC Werte sind gültig (alle Wechselrichter erreichbar)"
         }
     }
 }

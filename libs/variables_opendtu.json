@@ -38,5 +38,61 @@
         "VariableProfile": "",
         "Position": 5,
         "Active": true
+    },
+    {
+        "Ident": "ac_power",
+        "Name": "AC Power",
+        "VariableType": 2,
+        "VariableProfile": "~Watt.3680",
+        "Position": 10,
+        "Active": true
+    },
+    {
+        "Ident": "ac_yieldday",
+        "Name": "AC Energy today",
+        "VariableType": 2,
+        "VariableProfile": "HOYMILES.Wh",
+        "Position": 11,
+        "Active": true
+    },
+    {
+        "Ident": "ac_yieldtotal",
+        "Name": "AC Energy total",
+        "VariableType": 2,
+        "VariableProfile": "~Electricity",
+        "Position": 12,
+        "Active": true
+    },
+    {
+        "Ident": "ac_is_valid",
+        "Name": "AC values are valid (all inverters reachable)",
+        "VariableType": 0,
+        "VariableProfile": "~Switch",
+        "Position": 13,
+        "Active": true
+    },
+    {
+        "Ident": "dc_power",
+        "Name": "DC Power",
+        "VariableType": 2,
+        "VariableProfile": "~Watt.3680",
+        "Position": 20,
+        "Active": true
+    },
+    {
+        "Ident": "dc_irradiation",
+        "Name": "DC Irradiation",
+        "VariableType": 2,
+        "VariableProfile": "~Valve.F",
+        "Position": 21,
+        "Active": true
+    },
+    {
+        "Ident": "dc_is_valid",
+        "Name": "DC values are valid (all inverters reachable)",
+        "VariableType": 0,
+        "VariableProfile": "~Switch",
+        "Position": 22,
+        "Active": true
     }
 ]
