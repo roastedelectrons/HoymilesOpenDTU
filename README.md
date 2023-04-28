@@ -47,7 +47,7 @@ OpenDTU ist eine Firmware für den ESP32 und bildet zusamen mit einem NRF24L01+ 
 
 Vor der Einrichtung in IP-Symcon sollten die MQTT-Einstellungen in OpenDTU, wie im nächsten Kapitel beschrieben, vorgenommen werden.
 
-Die Installation und Einrichtung der *Hoymiles Microinverter*-Instanzen erfolgt am einfachten mit dem *OpenDTU Configurator*. Der Konfigurator erkennt automatisch alle OpenDTU's und Wechselrichter, die am Symcon MQTT-Server angemeldet sind. Werden neue Instanzen aus dem Konfigurator heraus angelegt, werden sie automatisch eingerichtet und sind sofort funktionsbereit.
+Die Installation und Einrichtung der *Hoymiles Microinverter*-Instanzen erfolgt am einfachtsen mit dem *OpenDTU Configurator*. Der Konfigurator erkennt automatisch alle OpenDTU's und Wechselrichter, die am Symcon MQTT-Server angemeldet sind. Werden neue Instanzen aus dem Konfigurator heraus angelegt, werden sie automatisch eingerichtet und sind sofort funktionsbereit.
 
 ### 5. Einrichtung in OpenDTU
 
@@ -58,14 +58,15 @@ Im Webinterface der OpenDTU müssen unter *Settings->MQTT* die folgenden *MQTT B
 
 ### 6. Changelog
 Version 1.1.0 (2023-04-26)
-* Neu: OpenDTU Splitter Instanz
-	* Statusvariablen der OpenDTU (Hostname, IP, RSSI, Uptime, Status)
+* Neu: OpenDTU Instanz (Objektbaum -> Splitter Instanzen)
+	* Statusvariablen für Hostname, IP, RSSI, Uptime, Online-Status
+	* Statusvariablen für Gesamtenergie und -leistung aller Wechselrichter (ab OpenDTU Version v23.4.25)
 	* Reboot() startet OpenDTU neu (über WebAPI)
 	* ReconnectMQTT() versucht eine MQTT-Verbindung wiederherzustellen (über WebAPI)
 	* Schalter für automatischen Reconnect bei MQTT-Verbindungsproblemen
-	* Datenfluss (wird automatisch angepasst): MQTT-Server <-> OpenDTU (Splitter) <-> Microinverter (Device)
+	* Neuer Datenfluss (wird automatisch angepasst): MQTT-Server <-> OpenDTU (Splitter) <-> Microinverter (Device)
 * Fix: Variablen mit Aktion können nun ohne Fehlermeldung deaktiviert werden
-* Change: Funktionen UpdateVariableList und ResetVariableList auf Grund der Richtlinien das Module-Stores entfernt
+* Change: Funktionen UpdateVariableList und ResetVariableList auf Grund der Richtlinien des Module-Stores entfernt
 
 Version 1.0.2
 * Fix: Probleme mit utf-8 Kodierung bei Umlauten in Wechselrichternamen und Topics in Symcon 6.3
@@ -75,10 +76,11 @@ Version 1.0.1
 * FIX: Konfigurator hat falsche Wechselrichter-Namen angezeigt
 
 Version 1.0.0 
+
 * Inital stable release
 
 ### 7. Lizenz
 MIT License
 
-Copyright (c) 2022 Tobias Ohrdes
+Copyright (c) 2023 Tobias Ohrdes
 
