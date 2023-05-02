@@ -51,7 +51,7 @@
         "Ident": "ac_yieldday",
         "Name": "AC Energy today",
         "VariableType": 2,
-        "VariableProfile": "HOYMILES.Wh",
+        "VariableProfile": "OPENDTU.Wh",
         "Position": 11,
         "Active": true
     },

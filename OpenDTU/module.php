@@ -18,6 +18,8 @@ declare(strict_types=1);
 			$this->RegisterPropertyString('Variables', '[]');
 
 			$this->RegisterAttributeString('IP', '');
+
+			$this->RegisterProfile(2, static::PREFIX.".Wh", "Electricity", "", " Wh", 0, 0, 0, 1);
 			
 		}
 
