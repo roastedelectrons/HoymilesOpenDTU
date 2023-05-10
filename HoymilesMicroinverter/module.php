@@ -258,9 +258,10 @@ declare(strict_types=1);
 			$power = false;
 			$model = $this->ReadPropertyString("Model");
 
-			if ( strpos( $model, 'HM-') === 0 )
+			$parts = explode('-', $model);
+			if ( isset($parts[1]) )
 			{
-				$power = intval( substr( $model, 3) );
+				$power = intval( $parts[1] );
 			}
 
 			return $power;

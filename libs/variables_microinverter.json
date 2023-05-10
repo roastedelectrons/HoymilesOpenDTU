@@ -326,5 +326,101 @@
         "VariableProfile": "~Electricity",
         "Position": 406,
         "Active": false
+    },
+    {
+        "Ident": "5_power",
+        "Name": "String 5 Power",
+        "VariableType": 2,
+        "VariableProfile": "~Watt.3680",
+        "Position": 501,
+        "Active": false
+    },
+    {
+        "Ident": "5_current",
+        "Name": "String 5 Current",
+        "VariableType": 2,
+        "VariableProfile": "~Ampere.16",
+        "Position": 502,
+        "Active": false
+    },
+    {
+        "Ident": "5_voltage",
+        "Name": "String 5 Voltage",
+        "VariableType": 2,
+        "VariableProfile": "~Volt.230",
+        "Position": 503,
+        "Active": false
+    },
+    {
+        "Ident": "5_irradiation",
+        "Name": "String 5 irradiation",
+        "VariableType": 2,
+        "VariableProfile": "~Valve.F",
+        "Position": 504,
+        "Active": false
+    },
+    {
+        "Ident": "5_yieldday",
+        "Name": "String 5 Energy today",
+        "VariableType": 2,
+        "VariableProfile": "HOYMILES.Wh",
+        "Position": 505,
+        "Active": false
+    },
+    {
+        "Ident": "5_yieldtotal",
+        "Name": "String 5 Energy total",
+        "VariableType": 2,
+        "VariableProfile": "~Electricity",
+        "Position": 506,
+        "Active": false
+    },
+    {
+        "Ident": "6_power",
+        "Name": "String 6 Power",
+        "VariableType": 2,
+        "VariableProfile": "~Watt.3680",
+        "Position": 601,
+        "Active": false
+    },
+    {
+        "Ident": "6_current",
+        "Name": "String 6 Current",
+        "VariableType": 2,
+        "VariableProfile": "~Ampere.16",
+        "Position": 602,
+        "Active": false
+    },
+    {
+        "Ident": "6_voltage",
+        "Name": "String 6 Voltage",
+        "VariableType": 2,
+        "VariableProfile": "~Volt.230",
+        "Position": 603,
+        "Active": false
+    },
+    {
+        "Ident": "6_irradiation",
+        "Name": "String 6 irradiation",
+        "VariableType": 2,
+        "VariableProfile": "~Valve.F",
+        "Position": 604,
+        "Active": false
+    },
+    {
+        "Ident": "6_yieldday",
+        "Name": "String 6 Energy today",
+        "VariableType": 2,
+        "VariableProfile": "HOYMILES.Wh",
+        "Position": 605,
+        "Active": false
+    },
+    {
+        "Ident": "6_yieldtotal",
+        "Name": "String 6 Energy total",
+        "VariableType": 2,
+        "VariableProfile": "~Electricity",
+        "Position": 606,
+        "Active": false
     }
 ]

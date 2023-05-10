@@ -1,5 +1,5 @@
 # Hoymiles Microinverter
-Das Modul stellt alle Daten der Hoymiles Modulwechselrichter (HM-300, HM-350, HM-400, HM-600, HM-800, HM-1200, HM-1500), die an einem OpenDTU Gateway angemeldet sind in IP-Symcon bereit. Außerdem kann aus IP-Symcon heraus die Leistungsbegrenzung des Wechselrichters geändert werden.
+Das Modul stellt alle Daten der Hoymiles Modulwechselrichter der Serien HM, HMS und HMT, die an einem OpenDTU Gateway angemeldet sind in IP-Symcon bereit. Außerdem kann aus IP-Symcon heraus die Leistungsbegrenzung des Wechselrichters geändert werden.
 
 ### Inhaltsverzeichnis
 

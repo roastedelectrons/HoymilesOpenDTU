@@ -331,6 +331,30 @@ declare(strict_types=1);
 					return "HM-1200";
 				case 0x101230:
 					return "HM-1500";
+				case 0x102021:
+					return "HMS-350";
+				case 0x101071:
+					return "HMS-500";
+				case 0x102111:
+					return "HMS-600";
+				case 0x102141:
+					return "HMS-800";
+				case 0x102171:
+					return "HMS-1000";
+				case 0x102241:
+					return "HMS-1600";
+				case 0x101251:
+					return "HMS-1800";
+				case 0x102251:
+					return "HMS-1800";
+				case 0x101271:
+					return "HMS-2000";
+				case 0x102271:
+					return "HMS-2000";
+				case 0x103311:
+					return "HMT-1800";
+				case 0x103331:
+					return "HMT-2250";
 				default:
 					return "UNKNOWN";
 			}

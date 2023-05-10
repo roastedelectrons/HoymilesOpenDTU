@@ -5,7 +5,7 @@
  
 # Hoymiles Mikrowechselrichter mit OpenDTU
 
-Modul für IP-Symcon zur Integration der Hoymiles Mikrowechselrichter für Photovoltaik-Module (HM-300, HM-350, HM-400, HM-600, HM-800, HM-1200, HM-1500) über eine OpenDTU. 
+Modul für IP-Symcon zur Integration der Hoymiles Mikrowechselrichter der Serien HM, HMS und HMT für Photovoltaik-Module über eine OpenDTU. 
 
 OpenDTU ist eine Firmware für den ESP32 und bildet zusamen mit einem NRF24L01+ Funkmodul ein Gateway zur Kommunikation mit den Wechselrichtern. OpenDTU stellt ein Webinterface zur Konfiguration und zum Auslesen der Wechselrichter zur Verfügung und kann mittels MQTT in andere Systeme eingebunden werden. Weitere Infos zum Bau und Einrichtung der OpenDTU gibt es im  [OpenDTU GitHub-Repository](https://github.com/tbnobody/OpenDTU).
 
@@ -24,12 +24,12 @@ OpenDTU ist eine Firmware für den ESP32 und bildet zusamen mit einem NRF24L01+ 
 
 - IP-Symcon ab Version 6.0
 - OpenDTU ([Dokumentation](https://github.com/tbnobody/OpenDTU))
-- Hoymiles Modulwechselrichter (HM-300, HM-350, HM-400, HM-600, HM-800, HM-1200, HM-1500)
+- Hoymiles Modulwechselrichter Serien HM, HMS und HMT
 
 ### 2. Enthaltene Module
 
 - __Hoymiles Microinverter__ ([Dokumentation](HoymilesMicroinverter))  
-	Das Modul stellt alle Daten der Hoymiles Modulwechselrichter (HM-300, HM-350, HM-400, HM-600, HM-800, HM-1200, HM-1500), die an einem OpenDTU Gateway angemeldet sind in IP-Symcon bereit. Außerdem kann aus IP-Symcon heraus die Leistungsbegrenzung des Wechselrichters geändert werden.
+	Das Modul stellt alle Daten der Hoymiles Modulwechselrichter Serien HM, HMS und HMT, die an einem OpenDTU Gateway angemeldet sind in IP-Symcon bereit. Außerdem kann aus IP-Symcon heraus die Leistungsbegrenzung des Wechselrichters geändert werden.
 
 - __OpenDTU__ ([Dokumentation](OpenDTU))  
 	Das Modul stellt die Betriebsdaten der OpenDTU in IP-Symcon bereit. Außerdem ermöglicht es den Neustart der OpenDTU und ein Wiederverbinden der MQTT Verbindung.
@@ -57,6 +57,9 @@ Im Webinterface der OpenDTU müssen unter *Settings->MQTT* die folgenden *MQTT B
 - **Base Topic**: Dieser Wert kann beliebig gesetzt werden und muss in IP-Symcon in der *Hoymiles Microinverter*-Instanz eingetragen werden, sofern nicht der Konfigurator benutzt wird.
 
 ### 6. Changelog
+Version 1.2.0 (2023-05-10)
+* Neu: Support für Wechselrichter der Serien HMT und HMS mit bis zu 6 PV-Modulen
+
 Version 1.1.0 (2023-04-26)
 * Neu: OpenDTU Instanz (Objektbaum -> Splitter Instanzen)
 	* Statusvariablen für Hostname, IP, RSSI, Uptime, Online-Status

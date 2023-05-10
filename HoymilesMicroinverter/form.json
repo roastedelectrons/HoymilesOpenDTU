@@ -18,6 +18,16 @@
                 { "caption": "HM-800", "value": "HM-800" },
                 { "caption": "HM-1200", "value": "HM-1200" },
                 { "caption": "HM-1500", "value": "HM-1500" },
+                { "caption": "HMS-350", "value": "HMS-350" },
+                { "caption": "HMS-500", "value": "HMS-500" },
+                { "caption": "HMS-600", "value": "HMS-600" },
+                { "caption": "HMS-800", "value": "HMS-800" },
+                { "caption": "HMS-1000", "value": "HMS-1000" },
+                { "caption": "HMS-1600", "value": "HMS-1600" },
+                { "caption": "HMS-1800", "value": "HMS-1800" },
+                { "caption": "HMS-2000", "value": "HMS-2000" },
+                { "caption": "HMT-1800", "value": "HMT-1800" },
+                { "caption": "HMT-2250", "value": "HMT-2250" },
                 { "caption": "UNKNOWN", "value": "UNKNOWN" }
             ]
         },
