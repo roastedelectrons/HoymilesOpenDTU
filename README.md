@@ -7,7 +7,7 @@
 
 Modul für IP-Symcon zur Integration der Hoymiles Mikrowechselrichter der Serien HM, HMS und HMT für Photovoltaik-Module über eine OpenDTU. 
 
-OpenDTU ist eine Firmware für den ESP32 und bildet zusamen mit einem NRF24L01+ Funkmodul ein Gateway zur Kommunikation mit den Wechselrichtern. OpenDTU stellt ein Webinterface zur Konfiguration und zum Auslesen der Wechselrichter zur Verfügung und kann mittels MQTT in andere Systeme eingebunden werden. Weitere Infos zum Bau und Einrichtung der OpenDTU gibt es im  [OpenDTU GitHub-Repository](https://github.com/tbnobody/OpenDTU).
+OpenDTU ist eine Firmware für den ESP32 und bildet zusamen mit einem NRF24L01+ bzw. CMT2300A Funkmodul ein Gateway zur Kommunikation mit den Wechselrichtern. OpenDTU stellt ein Webinterface zur Konfiguration und zum Auslesen der Wechselrichter zur Verfügung und kann mittels MQTT in andere Systeme eingebunden werden. Weitere Infos zum Bau und Einrichtung der OpenDTU gibt es im  [OpenDTU GitHub-Repository](https://github.com/tbnobody/OpenDTU).
 
 ### Inhaltsverzeichnis
 

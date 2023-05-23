@@ -47,7 +47,19 @@
             "String 4 Voltage": "String 4 Spannung",
             "String 4 irradiation": "String 4 Einstrahlung",
             "String 4 Energy today": "String 4 Energie heute",
-            "String 4 Energy total": "String 4 Energie gesamt"          
+            "String 4 Energy total": "String 4 Energie gesamt",
+            "String 5 Power": "String 5 Leistung",
+            "String 5 Current": "String 5 Strom",
+            "String 5 Voltage": "String 5 Spannung",
+            "String 5 irradiation": "String 5 Einstrahlung",
+            "String 5 Energy today": "String 5 Energie heute",
+            "String 5 Energy total": "String 5 Energie gesamt",
+            "String 6 Power": "String 6 Leistung",
+            "String 6 Current": "String 6 Strom",
+            "String 6 Voltage": "String 6 Spannung",
+            "String 6 irradiation": "String 6 Einstrahlung",
+            "String 6 Energy today": "String 6 Energie heute",
+            "String 6 Energy total": "String 6 Energie gesamt"         
         }
     }
 }
