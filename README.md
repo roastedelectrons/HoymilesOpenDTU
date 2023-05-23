@@ -57,7 +57,7 @@ Im Webinterface der OpenDTU müssen unter *Settings->MQTT* die folgenden *MQTT B
 - **Base Topic**: Dieser Wert kann beliebig gesetzt werden und muss in IP-Symcon in der *Hoymiles Microinverter*-Instanz eingetragen werden, sofern nicht der Konfigurator benutzt wird.
 
 ### 6. Changelog
-Version 1.2.0 (2023-05-10)
+Version 1.2.0 (2023-05-23)
 * Neu: Support für Wechselrichter der Serien HMT und HMS mit bis zu 6 PV-Modulen
 
 Version 1.1.0 (2023-04-26)
