@@ -1,5 +1,5 @@
 # OpenDTU Configurator
-Der Konfigurator erkennt automatisch alle am IP-Symcon MQTT-Server angemeldeten OpenDTU's und ermöglicht die einfache Erstellung der *Hoymiles Microinverter*-Instanzen ohne Konfigurationsaufwandt.
+Der Konfigurator erkennt automatisch alle OpenDTU-Geräte am ausgewählten MQTT-Gateway und ermöglicht die einfache Erstellung der *Hoymiles Microinverter*-Instanzen ohne Konfigurationsaufwandt.
 
 ### Inhaltsverzeichnis
 
@@ -12,7 +12,7 @@ Der Konfigurator erkennt automatisch alle am IP-Symcon MQTT-Server angemeldeten 
 
 Unter 'Instanz hinzufügen' kann das 'OpenDTU Configurator'-Modul mithilfe des Schnellfilters gefunden werden. 
 
-Der Konfigurator findet automatisch alle OpenDTU's, die am IP-Symcon MQTT-Server angemeldet sind. Sofern noch keine MQTT-Server Instanz vorhanden ist, erstellt der Konfigurator eine neue Server-Instanz.
+Wähle das MQTT-Gateway, über das der Konfigurator die OpenDTU-Topics empfängt. Ab IP-Symcon 8.2 kann auch ein MQTT Client mit einem externen Broker gewählt werden. Verwende für den Konfigurator und die OpenDTU-Instanz dasselbe Gateway.
 
 __Konfigurationsseite__:
 

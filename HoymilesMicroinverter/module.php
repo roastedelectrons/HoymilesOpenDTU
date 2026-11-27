@@ -35,7 +35,9 @@ declare(strict_types=1);
 			// For backward compatibility: change parent from MQTT-Server to OpenDTU
 			$this->MigrateSplitter();
 
-			$this->ConnectParent('{40505457-AB2C-057B-C9D7-657EBB53A528}');
+			if (version_compare(IPS_GetKernelVersion(), '8.2', '<')) {
+				$this->ConnectParent('{40505457-AB2C-057B-C9D7-657EBB53A528}');
+			}
 
 			//Setze Filter für ReceiveData
 			$Serial = $this->ReadPropertyString('Serial');

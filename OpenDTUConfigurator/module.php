@@ -7,9 +7,22 @@ declare(strict_types=1);
 		{
 			//Never delete this line!
 			parent::Create();
-			$this->ConnectParent('{C6D2AEB3-6E1F-4B2E-8E69-3A1A00246850}');
+			if (version_compare(IPS_GetKernelVersion(), '8.2', '<')) {
+				$this->ConnectParent('{C6D2AEB3-6E1F-4B2E-8E69-3A1A00246850}');
+			}
 			$this->SetBuffer("Devices", "[]");
 			$this->SetBuffer("Topics", "[]");
+		}
+
+		public function GetCompatibleParents(): string
+		{
+			return json_encode([
+				'type' => 'connect',
+				'moduleIDs' => [
+					'{C6D2AEB3-6E1F-4B2E-8E69-3A1A00246850}', // MQTT Server
+					'{F7A0DD2E-7684-95C0-64C2-D2A9DC47577B}' // MQTT Client
+				]
+			]);
 		}
 
 		public function Destroy()

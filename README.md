@@ -35,7 +35,7 @@ OpenDTU ist eine Firmware für den ESP32 und bildet zusamen mit einem NRF24L01+ 
 	Das Modul stellt die Betriebsdaten der OpenDTU in IP-Symcon bereit. Außerdem ermöglicht es den Neustart der OpenDTU und ein Wiederverbinden der MQTT Verbindung.
 
 - __OpenDTU Configurator__ ([Dokumentation](OpenDTUConfigurator))  
-	Der Konfigurator erkennt automatisch alle OpenDTU's, die am IP-Symcon MQTT Server angemeldet sind und ermöglicht so die einfache Erstellung der Instanz für den Hoymiles Modulwechselrichter ohne weiteren Konfigurationsaufwandt.
+	Der Konfigurator erkennt automatisch alle OpenDTU-Geräte am ausgewählten MQTT-Gateway und ermöglicht so die einfache Erstellung der Instanz für den Hoymiles Modulwechselrichter ohne weiteren Konfigurationsaufwandt.
 
 ### 3. Software-Installation
 
@@ -47,14 +47,16 @@ OpenDTU ist eine Firmware für den ESP32 und bildet zusamen mit einem NRF24L01+ 
 
 Vor der Einrichtung in IP-Symcon sollten die MQTT-Einstellungen in OpenDTU, wie im nächsten Kapitel beschrieben, vorgenommen werden.
 
-Die Installation und Einrichtung der *Hoymiles Microinverter*-Instanzen erfolgt am einfachtsen mit dem *OpenDTU Configurator*. Der Konfigurator erkennt automatisch alle OpenDTU's und Wechselrichter, die am Symcon MQTT-Server angemeldet sind. Werden neue Instanzen aus dem Konfigurator heraus angelegt, werden sie automatisch eingerichtet und sind sofort funktionsbereit.
+Die Installation und Einrichtung der *Hoymiles Microinverter*-Instanzen erfolgt am einfachtsen mit dem *OpenDTU Configurator*. Der Konfigurator erkennt automatisch OpenDTU-Geräte und Wechselrichter, deren MQTT-Nachrichten das ausgewählte Gateway empfängt. Werden neue Instanzen aus dem Konfigurator heraus angelegt, werden sie automatisch eingerichtet und sind sofort funktionsbereit.
 
 ### 5. Einrichtung in OpenDTU
 
 Im Webinterface der OpenDTU müssen unter *Settings->MQTT* die folgenden *MQTT Broker Parameter* angepasst werden:
-- **Hostname**: IP oder Hostname des IP-Symcon Servers
-- **Port**: Port des IP-Symcon MQTT-Servers
-- **Base Topic**: Dieser Wert kann beliebig gesetzt werden und muss in IP-Symcon in der *Hoymiles Microinverter*-Instanz eingetragen werden, sofern nicht der Konfigurator benutzt wird.
+- **Hostname**: IP-Adresse oder Hostname des MQTT-Brokers
+- **Port**: Port des MQTT-Brokers
+- **Base Topic**: Dieser Wert kann beliebig gesetzt werden und muss in IP-Symcon in der *OpenDTU*-Instanz eingetragen werden, sofern nicht der Konfigurator benutzt wird.
+
+Ab IP-Symcon 8.2 kann ein **MQTT Client** als Gateway für die OpenDTU-Instanz und den OpenDTU-Konfigurator gewählt werden. Der Client muss mit demselben externen Broker wie das OpenDTU-Gerät verbunden sein und den Basispfad des Geräts abonnieren (z. B. `solar/#` bei `solar/`). Für Schaltbefehle muss der Symcon-MQTT-Benutzer auf den entsprechenden Befehls-Topics publizieren dürfen. Beide Symcon-Instanzen sollten dasselbe MQTT-Gateway verwenden. Bei einer bestehenden Installation können OpenDTU und Konfigurator über **Gateway ändern** umgehängt werden. Die Wechselrichterinstanzen bleiben mit ihrer OpenDTU-Instanz verbunden.
 
 ### 6. Changelog
 Version 1.2.0 (2023-05-23)
